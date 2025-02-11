@@ -400,8 +400,11 @@ resource "humanitec_resource_definition" "custom_dns" {
   driver_inputs = {
     values_string = jsonencode({
       templates = {
+        init      = <<END_OF_TEXT
+base_domain: $${resources.config#dns.outputs.base_domain}
+END_OF_TEXT
         outputs = <<EOL
-host: $${context.app.id}-$${context.env.id}.${var.base_domain}
+host: $${context.app.id}-$${context.env.id}.{{ .init.base_domain }}
 EOL
       }
     })
@@ -573,10 +576,11 @@ flowchart LR
     direction LR
     subgraph Resources
         aro-connection-.->agent-connection
-        k8s-namespace
+        k8s-namespace-.>app-config
         workload
         base-env
         ingress
+        dns-.->dns-config
     end
     subgraph Apps
         subgraph Shared Values&Secrets
