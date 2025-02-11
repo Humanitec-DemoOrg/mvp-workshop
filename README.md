@@ -1,6 +1,6 @@
 # MVP Workshop - Day 1
 
-1 Platform Engineer (`Administrator`) sharing her/his screen running `humctl` and `terraform`.
+Platform Engineer (`Administrator`) sharing her/his screen running `humctl` and `terraform`.
 
 **Objective: Deploy one secure Workload in multiple Environments in your ARO cluster, exposed by your DNS/Ingress.**
 
@@ -10,20 +10,21 @@ TOC:
 - [Review RBAC setup](#review-rbac-setup)
 - [Define your `k8s-namespace` res def](#define-your-k8s-namespace-res-def)
 - [Define your `base-env` res def](#define-your-base-env-res-def)
-- [Onboard a project](#onboard-a-project)
-- [Deploy your first Workload](#deploy-your-first-workload)
-- [Analyze the Deployment error](#analyze-the-deployment-error)
+- [(Dev) Onboard a project](#dev-onboard-a-project)
+- [(Dev) Deploy your first Workload](#dev-deploy-your-first-workload)
+- [(Dev) Analyze the Deployment error](#dev-analyze-the-deployment-error)
 - [Define your `workload` res def](#define-your-workload-res-def)
 - [Define your `dns` res defs](#define-your-dns-res-defs)
 - [Define your `ingress` res defs](#define-your-ingress-res-defs)
-- [Use Shared Values&Secrets](#use-shared-valuessecrets)
-- [Create new Environments](#create-new-environments)
+- [(Dev) Use Shared Values&Secrets](#dev-use-shared-valuessecrets)
+- [(Dev) Create new Environments](#dev-create-new-environments)
 - [Wrap up](#wrap-up)
 - [Resources](#resources)
 
 ## Prerequisites
 
-Install [`humctl`](https://developer.humanitec.com/platform-orchestrator/cli/)
+- [ ] Let's select one container in your own registry, accessible from the cluster used during this workshop.
+- [ ] Install [`humctl`](https://developer.humanitec.com/platform-orchestrator/cli/)
 
 ```bash
 humctl login
@@ -53,12 +54,27 @@ terraform init -upgrade
 ## Review Cluster setup
 
 ```mermaid
-orchestrator
-cluster
-agent
-operator
-secretstore-default
-akv
+flowchart LR
+  subgraph Humanitec
+    direction LR
+    subgraph Resources
+        aro-connection-.->agent-connection
+    end
+  end
+  subgraph Azure
+    direction TB
+    subgraph ARO cluster
+        subgraph htc-agent
+            agent
+        end
+        subgraph htc-operator
+            operator
+        end
+        agent-.->operator
+    end
+    operator-->azure-key-vault
+  end
+  agent-connection-->agent
 ```
 
 ```bash
@@ -103,6 +119,8 @@ namespace.yaml:
     apiVersion: v1
     kind: Namespace
     metadata:
+      labels:
+        pod-security.kubernetes.io/enforce: restricted
       name: {{ .init.name }}
 END_OF_TEXT
         outputs   = "namespace: {{ .init.name }}"
@@ -187,7 +205,7 @@ Open the Humanitec Portal to see this res def:
 echo -e "https://app.humanitec.io/orgs/${HUMANITEC_ORG}/resources/definitions/base-env"
 ```
 
-## Onboard a project
+## (Dev) Onboard a project
 
 ```bash
 export APP=FIXME
@@ -205,7 +223,7 @@ humctl create env staging --type staging --app ${APP}
 humctl create env production --type production --app ${APP}
 ```
 
-## Deploy your first Workload
+## (Dev) Deploy your first Workload
 
 `score.yaml`:
 ```yaml
@@ -227,7 +245,7 @@ export IMAGE=FIXME
 humctl score deploy -f score.yaml --image ${IMAGE} --app ${APP} --env development --wait
 ```
 
-## Analyze the Deployment error
+## (Dev) Analyze the Deployment error
 
 Check the logs of the previous command.
 
@@ -299,7 +317,7 @@ humctl deploy env development --app ${APP} --wait
 
 **Question: have you noticed? It's not `humctl score deploy` here.**
 
-## Define your `dns` res def
+## (Dev) Define your `dns` res def
 
 `variables.tf`:
 ```terraform
@@ -509,6 +527,46 @@ humctl deploy env cloned --app ${APP}
 - Create an explicit `k8s-service-account` ([inspiration](https://developer.humanitec.com/examples/resource-definitions/template-driver/serviceaccount/))
 
 ## Wrap up
+
+```mermaid
+flowchart LR
+  subgraph Humanitec
+    direction LR
+    subgraph Resources
+        aro-connection-.->agent-connection
+        k8s-namespace
+        workload
+        base-env
+        ingress
+    end
+    subgraph Apps
+        subgraph Shared Values&Secrets
+            development
+            cloned
+            staging
+            production
+        end
+        development
+        cloned
+        staging
+        production
+    end
+  end
+  subgraph Azure
+    direction TB
+    subgraph ARO cluster
+        subgraph htc-agent
+            agent
+        end
+        subgraph htc-operator
+            operator
+        end
+        agent-.->operator
+    end
+    operator-->azure-key-vault
+  end
+  agent-connection-->agent
+```
 
 - `humctl score available-resource-types` is listing to the Devs they golden paths supported.
 - Let's look inside the cluster: `kubectl get all,workloads,resources,secretmappings`
