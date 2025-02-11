@@ -1,8 +1,8 @@
-# MVP Workshop - Day 1
+# MVP Workshop - Day 2
 
-Platform Engineer (`Administrator`) sharing her/his screen running `humctl` and `terraform`.
+1 Platform Engineer (`Administrator`) sharing her/his screen running `humctl`, `terraform` and `kubectl`/`oc`.
 
-**Objective: Deploy one secure Workload in multiple Environments in your ARO cluster, exposed by your DNS/Ingress.**
+**--> Objective: Deploy one secure Workload in multiple Environments in your ARO cluster, exposed by your DNS/Ingress.**
 
 TOC:
 - [Prerequisites](#prerequisites)
@@ -10,7 +10,7 @@ TOC:
 - [Review RBAC setup](#review-rbac-setup)
 - [Define your `k8s-namespace` res def](#define-your-k8s-namespace-res-def)
 - [Define your `base-env` res def](#define-your-base-env-res-def)
-- [(Dev) Onboard a project](#dev-onboard-a-project)
+- [Onboard a project](#dev-onboard-a-project)
 - [(Dev) Deploy your first Workload](#dev-deploy-your-first-workload)
 - [(Dev) Analyze the Deployment error](#dev-analyze-the-deployment-error)
 - [Define your `workload` res def](#define-your-workload-res-def)
@@ -85,7 +85,7 @@ humctl get res-def
 humctl resources check-connectivity --app test --env development
 ```
 
-**Question: What is this `k8s-cluster` res def telling us?**
+**[ ] Question: What is this `k8s-cluster` res def telling us?**
 
 Open the Humanitec Portal to see this res def:
 ```bash
@@ -111,7 +111,11 @@ resource "humanitec_resource_definition" "custom_namespace" {
   driver_inputs = {
     values_string = jsonencode({
       templates = {
-        init      = "name: $${context.env.id}-$${context.app.id}"
+        init      = <<END_OF_TEXT
+app_id: $${context.app.id}
+name: $${context.env.id}-$${context.app.id}
+cost_center: $${resources.config#app.outputs.cost_center}
+END_OF_TEXT
         manifests = <<END_OF_TEXT
 namespace.yaml:
   location: cluster
@@ -121,6 +125,8 @@ namespace.yaml:
     metadata:
       labels:
         pod-security.kubernetes.io/enforce: restricted
+        app/id: {{ .init.app_id }}
+        cost/center: {{ .init.app_id }}
       name: {{ .init.name }}
 END_OF_TEXT
         outputs   = "namespace: {{ .init.name }}"
@@ -145,7 +151,7 @@ terraform apply tf.plan
 humctl get res-defs
 ```
 
-**Question: What is this `k8s-namespace` res def telling us?**
+**[ ] Question: What is this `k8s-namespace` res def telling us?**
 
 Open the Humanitec Portal to see this res def:
 ```bash
@@ -198,7 +204,7 @@ terraform apply tf.plan
 humctl get res-defs
 ```
 
-**Question: What is this `base-env` res def telling us?**
+**[ ] Question: What is this `base-env` res def telling us?**
 
 Open the Humanitec Portal to see this res def:
 ```bash
@@ -206,6 +212,42 @@ echo -e "https://app.humanitec.io/orgs/${HUMANITEC_ORG}/resources/definitions/ba
 ```
 
 ## (Dev) Onboard a project
+
+```terraform
+variable "cost_center" {
+  type = string
+}
+variable "bu_id" {
+  type = string
+}
+```
+
+```terraform
+resource "humanitec_resource_definition" "app_config" {
+  driver_type    = "humanitec/echo"
+  id             = "app-config"
+  name           = "app-config"
+  type           = "config"
+  driver_inputs = {
+    values_string = jsonencode({
+      "cost_center" = var.cost_center
+      "bu_id"     = var.bu_id
+    })
+  }
+}
+
+resource "humanitec_resource_definition_criteria" "app_config" {
+  resource_definition_id = resource.humanitec_resource_definition.app_config.id
+  res_id                 = "app"
+  #app_id                 = "app-id"
+}
+```
+
+```bash
+terraform plan -out tf.plan
+
+terraform apply tf.plan
+```
 
 ```bash
 export APP=FIXME
@@ -315,13 +357,15 @@ Redeploy your Workload:
 humctl deploy env development --app ${APP} --wait
 ```
 
-**Question: have you noticed? It's not `humctl score deploy` here.**
+**[ ] Question: have you noticed? It's not `humctl score deploy` here.**
 
 ## (Dev) Define your `dns` res def
 
 `variables.tf`:
 ```terraform
-
+variable "base_domain" {
+  type = string
+}
 ```
 
 `dns_config.tf`:
@@ -390,7 +434,7 @@ Redeploy your Workload:
 humctl deploy env development --app ${APP} --wait
 ```
 
-**Question: What's happening? What's missing?**
+**[ ] Question: What's happening? What's missing?**
 
 Let's update our `score.yaml` file:
 ```yaml
@@ -420,7 +464,7 @@ service:
 humctl score deploy -f score.yaml --image ${IMAGE} --app ${APP} --env development --wait
 ```
 
-**Question: What's happening? What's missing?**
+**[ ] Question: What's happening? What's missing?**
 
 ## Define your `ingress` res def
 
@@ -521,11 +565,6 @@ Or, deploy the entire Environment in its actual state:
 humctl deploy env cloned --app ${APP}
 ```
 
-## Bonus
-
-- Expose a specific `external` `class` for `dns` ([inspiration](https://developer.humanitec.com/platform-orchestrator/resources/resource-classes/))
-- Create an explicit `k8s-service-account` ([inspiration](https://developer.humanitec.com/examples/resource-definitions/template-driver/serviceaccount/))
-
 ## Wrap up
 
 ```mermaid
@@ -574,6 +613,11 @@ flowchart LR
 - All `humctl` commands creating objects in Humanitec were either at the App level, Env level or Workload's deployment level.
 - Some of these `humctl` commands creating objects in Humanitec can be written in `.tf` too.
 - Next steps: Operator and Terraform Driver. Anything else?
+
+## Bonus
+
+- Expose a specific `external` `class` for `dns` ([inspiration](https://developer.humanitec.com/platform-orchestrator/resources/resource-classes/))
+- Create an explicit `k8s-service-account` ([inspiration](https://developer.humanitec.com/examples/resource-definitions/template-driver/serviceaccount/))
 
 ## Resources
 
