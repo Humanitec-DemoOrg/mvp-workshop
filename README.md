@@ -1,6 +1,8 @@
 # MVP Workshop - Day 1
 
-1 Platform Engineer (`Administrator`) sharing her/his screen running `humctl` and `terraform` commands locally.
+1 Platform Engineer (`Administrator`) sharing her/his screen running `humctl` and `terraform`.
+
+**Objective: Deploy one secure Workload in multiple Environments in your ARO cluster, exposed by your DNS/Ingress.**
 
 TOC:
 - [Prerequisites](#prerequisites)
@@ -14,7 +16,6 @@ TOC:
 - [Define your `workload` res def](#define-your-workload-res-def)
 - [Define your `dns` res defs](#define-your-dns-res-defs)
 - [Define your `ingress` res defs](#define-your-ingress-res-defs)
-- [Define a `public` `class` for `dns`](#define-a-public-class-for-dns)
 - [Use Shared Values&Secrets](#use-shared-valuessecrets)
 - [Create new Environments](#create-new-environments)
 - [Wrap up](#wrap-up)
@@ -440,18 +441,6 @@ Redeploy your Workload:
 humctl deploy env development --app ${APP} --wait
 ```
 
-## Define a `public` `class` for `dns`
-
-```terraform
-resource "humanitec_resource_class" "resource_class" {
-  id            = "public"
-  resource_type = "dns"
-  description   = "An example resource class to request a public DNS."
-}
-```
-
-**Question: How to use this?**
-
 ## Use Shared Values&Secrets
 
 ```bash
@@ -513,6 +502,11 @@ Or, deploy the entire Environment in its actual state:
 ```bash
 humctl deploy env cloned --app ${APP}
 ```
+
+## Bonus
+
+- Expose a specific `external` `class` for `dns` ([inspiration](https://developer.humanitec.com/platform-orchestrator/resources/resource-classes/))
+- Create an explicit `k8s-service-account` ([inspiration](https://developer.humanitec.com/examples/resource-definitions/template-driver/serviceaccount/))
 
 ## Wrap up
 
