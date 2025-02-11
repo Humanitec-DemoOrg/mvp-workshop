@@ -85,12 +85,12 @@ humctl get res-def
 humctl resources check-connectivity --app test --env development
 ```
 
-**[ ] Question: What is this `k8s-cluster` res def telling us?**
-
 Open the Humanitec Portal to see this res def:
 ```bash
 echo -e "https://app.humanitec.io/orgs/${HUMANITEC_ORG}/resources/definitions/aro-cluster"
 ```
+
+**[ ] Question: What is this `k8s-cluster` res def telling us?**
 
 ## Review RBAC setup
 
@@ -115,6 +115,7 @@ resource "humanitec_resource_definition" "custom_namespace" {
 app_id: $${context.app.id}
 name: $${context.env.id}-$${context.app.id}
 cost_center: $${resources.config#app.outputs.cost_center}
+bu_id: $${resources.config#app.outputs.bu_id}
 END_OF_TEXT
         manifests = <<END_OF_TEXT
 namespace.yaml:
@@ -126,7 +127,8 @@ namespace.yaml:
       labels:
         pod-security.kubernetes.io/enforce: restricted
         app/id: {{ .init.app_id }}
-        cost/center: {{ .init.app_id }}
+        cost/center: {{ .init.cost_center }}
+        bu/id: {{ .init.bu_id }}
       name: {{ .init.name }}
 END_OF_TEXT
         outputs   = "namespace: {{ .init.name }}"
