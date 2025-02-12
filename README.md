@@ -10,6 +10,10 @@
 - Golden path PE-3: I want to onboard a new Project to the Platform
 - Golden path PE-4: I want to allow my Devs to expose their Workloads via a DNS
 
+[Day 3](day3-pe.md):
+- Golden path PE-5: I want to allow my Devs to use Azure Blob Storage with their Workloads
+- Golden path PE-6: I want to allow my Devs to generate an Azure Service Principal for their Workloads
+
 ## As Developer,
 
 [Day 2](day2-dev.md):
@@ -17,3 +21,7 @@
 - Golden path DEV-2: I want to see the status of the Deployment of my Workload
 - Golden path DEV-3: I want to see which supported resources I can use for my Workload
 - Golden path DEV-4: I want to expose my Workload via a DNS
+
+[Day 3](day3-dev.md):
+- Golden path DEV-5: I want to use an Azure Blob Storage with my Workload
+- Golden path DEV-6: I want to use an Azure Blob Storage and an Azure Service Principal with my Workload
