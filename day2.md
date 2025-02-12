@@ -12,6 +12,7 @@ Go [there](day2-pe.md).
 
 - Golden path DEV-1: I want to deploy my Workload
 - Golden path DEV-2: I want to see the status of the Deployment of my Workload
-- Golden path DEV-3: I want to expose my Workload via a DNS
+- Golden path DEV-3: I want to see the resource dependencies available for my Workloads
+- Golden path DEV-4: I want to expose my Workload via a DNS
 
 Go [there](day2-dev.md).

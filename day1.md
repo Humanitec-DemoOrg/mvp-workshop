@@ -54,3 +54,6 @@ echo -e "https://app.humanitec.io/orgs/${HUMANITEC_ORG}/resources/definitions/ar
 - Org level
 - App level
 - Env Type level
+
+Resources:
+- [Humanitec Orchestrator Overview](https://developer.humanitec.com/training/fundamentals/platform-architecture/overview/)
