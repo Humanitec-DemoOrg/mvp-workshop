@@ -8,7 +8,7 @@
 - [Prerequisites](#prerequisites)
 - [Golden path DEV-1: I want to deploy my Workload](#golden-path-dev-1-i-want-to-deploy-my-workload)
 - [Golden path DEV-2: I want to see the status of the Deployment of my Workload](#golden-path-dev-2-i-want-to-see-the-status-of-the-deployment-of-my-workload)
-- [Golden path DEV-3: I want to see the resource dependencies available for my Workloads]()
+- [Golden path DEV-3: I want to see which resources I can use for my Workload](#golden-path-dev-3-i-want-to-see-which-resources-i-can-use-for-my-workload)
 - [Golden path DEV-4: I want to expose my Workload via a DNS](#golden-path-dev-3-i-want-to-expose-my-workload-via-a-dns)
 - [Resources](#resources)
 
@@ -52,9 +52,9 @@ humctl score deploy -f score.yaml --image ${IMAGE} --app ${APP} --env developmen
 
 ## Golden path DEV-2: I want to see the status of the Deployment of my Workload
 
-Get teh Deploy status:
+Get the Deployment status:
 ```bash
-FIXME
+humctl get deploy . --app ${APP} --env development -o json
 ```
 
 Get the Deployment error:
@@ -72,7 +72,7 @@ Open the Humanitec Portal to see the logs of the running container:
 echo -e "https://app.humanitec.io/orgs/${HUMANITEC_ORG}/apps/${APP}/envs/development/"
 ```
 
-## Golden path DEV-3: I want to see the resource dependencies available for my Workloads
+## Golden path DEV-3: I want to see which resources I can use for my Workload
 
 To see `type` and `class`:
 ```bash
