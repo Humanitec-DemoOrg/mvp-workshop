@@ -22,7 +22,7 @@ TOC:
 ## Prerequisites
 
 - [ ] Install [`humctl`](https://developer.humanitec.com/platform-orchestrator/cli/).
-- [ ] Install [`terraform`]().
+- [ ] Install [`terraform`](https://developer.hashicorp.com/terraform/install).
 - [ ] Got an invite to join the Humanitec Org as `Administrator`.
 
 ```bash
