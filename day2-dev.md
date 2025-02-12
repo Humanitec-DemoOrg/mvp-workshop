@@ -8,6 +8,7 @@
 - [Golden path DEV-1: I want to deploy my Workload](#golden-path-dev-1-i-want-to-deploy-my-workload)
 - [Golden path DEV-2: I want to see the status of the Deployment of my Workload](#golden-path-dev-2-i-want-to-see-the-status-of-the-deployment-of-my-workload)
 - [Golden path DEV-3: I want to expose my Workload via a DNS](#golden-path-dev-3-i-want-to-expose-my-workload-via-a-dns)
+- [Resources](#resources)
 
 ## Prerequisites
 
@@ -22,7 +23,7 @@ humctl login
 ```bash
 export HUMANITEC_ORG=FIXME
 
-humctl set org ${HUMANITEC_ORG}
+humctl config set org ${HUMANITEC_ORG}
 ```
 
 ## Golden path DEV-1: I want to deploy my Workload
@@ -98,3 +99,7 @@ service:
 ```bash
 humctl score deploy -f score.yaml --image ${IMAGE} --app ${APP} --env development --wait
 ```
+
+## Resources
+
+- [More Score file examples](https://developer.humanitec.com/examples/score/)

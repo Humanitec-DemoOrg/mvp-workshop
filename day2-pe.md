@@ -16,6 +16,7 @@ TOC:
   - [Define a `dns` res def](#define-a-dns-res-def)
   - [Define a `ingress` res def](#define-a-ingress-res-def)
 - [Wrap up](#wrap-up)
+- [Bonus](#bonus)
 - [Resources](#resources)
 
 ## Prerequisites
@@ -31,7 +32,7 @@ humctl login
 ```bash
 export HUMANITEC_ORG=FIXME
 
-humctl set org ${HUMANITEC_ORG}
+humctl config set org ${HUMANITEC_ORG}
 ```
 
 `main.tf`:
@@ -401,3 +402,20 @@ flowchart LR
     end
   end
 ```
+
+- `humctl score available-resource-types` is listing to the Devs their golden paths supported.
+- All `.tf` were about Org-level objects in Humanitec.
+- All `humctl` commands creating objects in Humanitec were either at the App level, Env level or Workload's deployment level.
+- Some of these `humctl` commands creating objects in Humanitec can be written in `.tf` too.
+- Next steps: Operator and Terraform Driver. Anything else?
+
+## Bonus
+
+- Expose a specific `external` `class` for `dns` ([inspiration](https://developer.humanitec.com/platform-orchestrator/resources/resource-classes/))
+- Create an explicit `k8s-service-account` ([inspiration](https://developer.humanitec.com/examples/resource-definitions/template-driver/serviceaccount/))
+- Let's look inside the cluster: `kubectl get all,workloads,resources,secretmappings`
+
+## Resources
+
+- [More Res Defs examples](https://developer.humanitec.com/examples/resource-definitions/)
+- [More Resource graph patterns](https://developer.humanitec.com/examples/resource-graph-patterns/)
