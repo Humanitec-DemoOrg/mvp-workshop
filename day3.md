@@ -1,0 +1,4 @@
+- azure-blob
+- redis
+  -- incluster
+  -- terraform
