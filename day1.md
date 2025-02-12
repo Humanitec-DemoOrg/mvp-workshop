@@ -2,12 +2,12 @@
 
 TOC:
 - [Prerequisites](#prerequisites)
-- [Golden path PE-1: I want to integrate a cluster with Humanitec](#golden-path-pe-1-i-want-to-integrate-a-cluster-with-humanitec)
+- [Golden path PE-1: I want to onboard a cluster to the Platform](#golden-path-pe-1-i-want-to-onboard-a-cluster-to-the-platform)
 - [Review RBAC setup](#review-rbac-setup)
 - [Wrap up](#wrap-up)
 - [Resources](#resources)
 
-## Golden path PE-1: I want to integrate a cluster with Humanitec
+## Golden path PE-1: I want to onboard a cluster to the Platform
 
 ```mermaid
 flowchart LR
