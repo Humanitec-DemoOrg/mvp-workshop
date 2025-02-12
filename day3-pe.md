@@ -12,6 +12,11 @@
 
 ## Golden path PE-5: I want to allow my Devs to use Azure Blob Storage with their Workloads
 
+You Developers has currently access to:
+```bash
+humctl score available-resource-types
+```
+
 ### Define an `azure-blob` (`echo`)
 
 On the UI, create new "Azure Blob Storage" resource definition as `echo` with these values:
