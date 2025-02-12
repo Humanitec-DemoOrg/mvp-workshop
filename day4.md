@@ -64,7 +64,11 @@ humctl score deploy -f score.yaml --app ${APP} --env cloned --wait
 ```
 Or, deploy the entire Environment in its actual state:
 ```bash
-humctl deploy env cloned --app ${APP}
+humctl deploy env cloned cloned --app ${APP}
+```
+Or, deploy an entire Environment to another:
+```bash
+humctl deploy env development cloned --app ${APP}
 ```
 
 ## Wrap up
