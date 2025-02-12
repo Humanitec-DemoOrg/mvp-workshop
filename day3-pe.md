@@ -5,6 +5,7 @@
   - Define an `azure-blob` (`echo`)
   - Define an `azure-blob` (`terraform`) inline
   - Define an `azure-blob` (`terraform`) in git
+  - Define an `azure-blob` (`terraform`) in git with Cloud Account
 - Golden path PE-6: I want to allow my Devs to generate an Azure Service Principal for their Workloads
   - Define an `azure-service-principal` (`echo`)
 - Next steps
