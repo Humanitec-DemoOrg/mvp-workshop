@@ -29,8 +29,8 @@ variable "client_id" {
     default = "test"
 }
 output "account" {
-  value = "hard-coded-account-from-repo"
+  value = "hard-coded-account-from-repo-cloud-account"
 }
 output "container" {
-  value = "hard-coded-container-from-repo"
+  value = "hard-coded-container-from-repo-cloud-account"
 }
