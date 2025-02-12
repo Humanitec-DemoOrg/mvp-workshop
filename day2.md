@@ -2,7 +2,7 @@
 
 ## As Platform Engineer,
 
-- Golden path PE-2: I want to define and standardize higly secured Kubernetes Namespaces
+- Golden path PE-2: I want to define and standardize highly secured Kubernetes Namespaces
 - Golden path PE-3: I want to onboard a new Project
 - Golden path PE-4: I want to allow my Devs to expose their Workloads via a DNS
 

@@ -6,7 +6,7 @@
 
 TOC:
 - [Prerequisites](#prerequisites)
-- [Golden path PE-2: I want to define and standardize higly secured Kubernetes Namespaces](#golden-path-pe-2-i-want-to-define-and-standardize-higly-secured-kubernetes-namespace)
+- [Golden path PE-2: I want to define and standardize highly secured Kubernetes Namespaces](#golden-path-pe-2-i-want-to-define-and-standardize-highly-secured-kubernetes-namespace)
   - [Define a `k8s-namespace` res def](#define-a-k8s-namespace-res-def)
   - [Define a `base-env` res def](#define-a-base-env-res-def)
   - [Define a `workload` res def](#define-a-workload-res-def)
@@ -50,7 +50,7 @@ terraform {
 terraform init -upgrade
 ```
 
-## Golden path PE-2: I want to define and standardize higly secured Kubernetes Namespaces
+## Golden path PE-2: I want to define and standardize highly secured Kubernetes Namespaces
 
 ### Define a `k8s-namespace` res def
 

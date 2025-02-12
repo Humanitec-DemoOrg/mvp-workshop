@@ -1,4 +1,4 @@
-# MVP Workshop - Day 2
+# MVP Workshop
 
 ## As Platform Engineer,
 
@@ -6,7 +6,7 @@
 - Golden path PE-1: I want to integrate a cluster with Humanitec
 
 [Day 2](day2-pe.md):
-- Golden path PE-2: I want to define and standardize higly secured Kubernetes Namespaces
+- Golden path PE-2: I want to define and standardize highly secured Kubernetes Namespaces
 - Golden path PE-3: I want to onboard a new Project
 - Golden path PE-4: I want to allow my Devs to expose their Workloads via a DNS
 
