@@ -52,6 +52,15 @@ On the UI, update the existing `azure-blob-tf` resource definition:
   - Revision: `refs/heads/main`
   - Sub path: `tf-modules/azure-blob-echo`
 
+### Define an `azure-blob` (`terraform`) in git with Cloud Account
+
+On the UI, update the existing `azure-blob-tf` resource definition:
+- Cloud Account: Select.
+- Git Source:
+  - URL: `https://github.com/Humanitec-DemoOrg/mvp-workshop.git`
+  - Revision: `refs/heads/main`
+  - Sub path: `tf-modules/azure-blob-echo-cloud-account`
+
 ## Golden path PE-6: I want to allow my Devs to generate an Azure Service Principal for their Workloads
 
 ### Define an `azure-service-principal` (`echo`)
@@ -74,4 +83,5 @@ humctl score available-resource-types
 - Private Git repo for TF Modules
 - TF runner in your own Kubernetes cluster
 - Container runner in your own Kubernetes cluster
+- Quick review of what's happening with the Operator
 - Add `redis` with `template` (in-cluster) and `terraform` (in Azure)
