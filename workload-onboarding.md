@@ -1,5 +1,4 @@
-# Workload onboarding
-
+# Golden path DEV-7: I want to onboard a new Workload
 
 ## Assessment
 
