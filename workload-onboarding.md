@@ -1,5 +1,18 @@
 # Golden path DEV-7: I want to onboard a new Workload
 
+Disclaimer:
+- It won't be the all things in just a few hours, that's ok.
+- It's a learning experience (failing fast, understanding the concept)
+- That's not what your Developers will feel when you will be ready to onboard them.
+- We may need to parking lot some of the things.
+
+High level agenda:
+- Assessment questionnaires
+- Quick App and Developer onboarding
+- Quick Deployment via UI
+- Score
+- `humctl`
+
 ## Assessment
 
 - [ ] Project Name
