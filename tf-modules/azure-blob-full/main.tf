@@ -3,6 +3,9 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
     }
+    random = {
+      source  = "hashicorp/random"
+    }
   }
 }
 provider "azurerm" {
@@ -14,19 +17,23 @@ provider "azurerm" {
   oidc_token      = var.oidc_token
 }
 variable "oidc_token" {
-    type = string
+  type = string
 }
 variable "subscription_id" {
-    type = string
-    default = "test"
+  type = string
 }
 variable "tenant_id" {
-    type = string
-    default = "test"
+  type = string
 }
 variable "client_id" {
-    type = string
-    default = "test"
+  type = string
+}
+variable "resource_group_name" {
+  type = string
+}
+variable "storage_account_location" {
+  type    = string
+  default = "eastus"
 }
 resource "random_string" "storage_account_name_sufix" {
   length  = 16
@@ -53,8 +60,8 @@ resource "azurerm_storage_container" "storage_container" {
   container_access_type = "private"
 }
 output "account" {
-  value = "hard-coded-account-from-repo-cloud-account"
+  value = azurerm_storage_account.storage_account.name
 }
 output "container" {
-  value = "hard-coded-container-from-repo-cloud-account"
+  value = azurerm_storage_container.storage_container.name
 }
