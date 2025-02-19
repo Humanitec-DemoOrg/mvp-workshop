@@ -66,6 +66,7 @@ resource "humanitec_resource_definition" "custom_namespace" {
       templates = {
         init      = <<END_OF_TEXT
 app_id: $${context.app.id}
+env_id: $${context.env.id}
 name: $${context.env.id}-$${context.app.id}
 cost_center: $${resources.config#app.outputs.cost_center}
 bu_id: $${resources.config#app.outputs.bu_id}
@@ -79,7 +80,8 @@ namespace.yaml:
     metadata:
       labels:
         pod-security.kubernetes.io/enforce: restricted
-        app/id: {{ .init.app_id }}
+        app: {{ .init.app_id }}
+        env: {{ .init.env_id }}
         cost/center: {{ .init.cost_center }}
         bu/id: {{ .init.bu_id }}
       name: {{ .init.name }}
@@ -365,6 +367,11 @@ resource "humanitec_resource_definition" "custom_ingress" {
       "no_tls" = true
       "annotations" = {
         "route.openshift.io/termination" = "edge"
+        "route.openshift.io/insecureEdgeTerminationPolicy" = "Allow"
+      }
+      "labels" = {
+        "app" = "$${context.app.id}"
+        "env" = "$${context.env.id}"
       }
     })
   }
