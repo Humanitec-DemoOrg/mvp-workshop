@@ -103,6 +103,11 @@ entity:
         subscription_id: FIXME-AZURE_SUBSCRIPTION_ID
         client_id: FIXME-MANAGED_IDENTITY_CLIENT_ID
         resource_group_name: FIXME-AZURE_RESOURCE_GROUP
+    secret_refs:
+      source:
+        token:
+          ref: FIXME-SECRET_KEY_IN_SECRET_STORE
+          store: FIXME-SECRET_STORE_ID
   criteria:
     - {}
 ```
@@ -112,6 +117,8 @@ Change all the `FIXME-*` accordingly:
 - `FIXME-AZURE_TENANT_ID`: where the Managed Identity of the Cloud Account has been created.
 - `FIXME-AZURE_SUBSCRIPTION_ID`: the Azure Subscription ID where the Azure Blob will be created.
 - `FIXME-AZURE_RESOURCE_GROUP`: the Azure Resource Group where the Azure Blob will be created.
+- `FIXME-SECRET_KEY_IN_SECRET_STORE`: the key of the secret in your secret manager where your token or ssh key is stored.
+- `FIXME-SECRET_STORE_ID`: the Secret Store ID where your token or ssh key is stored (`humctl api get /orgs/${HUMANITEC_ORG}/secretstores`).
 
 Important notes:
 - At this stage, the Terraform Runner and Terraform State are still managed/hosted in Humanitec, not yet in your own infrastructure. This will be the next step once this has been deployed/tested successfully first.
